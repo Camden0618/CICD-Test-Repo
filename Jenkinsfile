@@ -22,7 +22,7 @@ pipeline {
             }
         }
     }
-
+    /*
     post {
 
         // Email Ext plugin:
@@ -34,4 +34,5 @@ pipeline {
 
         }
     }
+    */
 }
