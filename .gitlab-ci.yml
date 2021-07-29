@@ -24,15 +24,13 @@ generate-config:
   stage: setup
   script:
     - pip install PyYaml
-    - python ./generate-configs.py
+    - python ./generate-configs.py $TEST_NAME
     - ls
     - git status
-    - cat service-a-config.yaml
-    - cat service-b-config.yaml
+    - cat config.yaml
   artifacts:
     paths:
-      - service-a-config.yaml
-      - service-b-config.yaml
+      - config.yaml
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
@@ -40,18 +38,11 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo "Compiling the code..."
     - echo "Compile complete."
 
-trigger-service-a:
+trigger-config:
   stage: triggers
   trigger:  
     include:
-      - artifact: service-a-config.yaml
-        job: generate-config
-
-trigger-service-b:
-  stage: triggers
-  trigger:
-    include:
-      - artifact: service-b-config.yaml
+      - artifact: config.yaml
         job: generate-config
 
 unit-test-job:   # This job runs in the test stage.

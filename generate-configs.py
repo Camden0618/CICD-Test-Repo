@@ -1,5 +1,21 @@
+import sys
 import yaml
 from yaml import Loader
+
+config_all_yaml = """
+service-a-1:
+  script:
+    - echo 'job 1 for service A'
+service-a-2:
+  script:
+    - echo 'job 2 for service A'
+service-b-1:
+  script:
+    - echo 'job 1 for service B'
+service-b-2:
+  script:
+    - echo 'job 2 for service B'
+"""
 
 config_a_yaml = """
 service-a-1:
@@ -19,13 +35,15 @@ service-b-2:
     - echo 'job 2 for service B'
 """
 
-config_a = yaml.load(config_a_yaml, Loader=Loader)
-config_b = yaml.load(config_b_yaml, Loader=Loader)
+if sys.argv[0] == "a":
+    selected_config = config_a_yaml
+elif sys.argv[0] == "b":
+    selected_config = config_b_yaml
+else:
+    selected_config = config_all_yaml
 
-with open("service-a-config.yaml", 'w') as yamlfile:
-    data = yaml.dump(config_a, yamlfile)
-    print("config_a write successful")
+config = yaml.load(selected_config, Loader=Loader)
 
-with open("service-b-config.yaml", 'w') as yamlfile:
-    data = yaml.dump(config_b, yamlfile)
-    print("config_b write successful")
+with open("config.yaml", 'w') as yamlfile:
+    data = yaml.dump(config, yamlfile)
+    print("config write successful")
