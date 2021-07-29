@@ -35,11 +35,9 @@ service-b-2:
     - echo 'job 2 for service B'
 """
 
-print(sys.argv)
-print(sys.argv[0])
-if sys.argv[0] == "a":
+if sys.argv[1] == "a":
     selected_config = config_a_yaml
-elif sys.argv[0] == "b":
+elif sys.argv[1] == "b":
     selected_config = config_b_yaml
 else:
     selected_config = config_all_yaml
